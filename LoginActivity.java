@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login_button;
     EditText UserName, Password;
     String username, password;
-    String login_url = "http://192.168.8.110/login.php";
+    String login_url = "http://192.168.8.100/login.php";
     AlertDialog.Builder builder;
 
 
