@@ -25,10 +25,12 @@ import java.util.concurrent.TimeUnit;
 public class MyTeamActivity extends AppCompatActivity {
 
 
+    String url = "http://192.168.1.14";
     String json_string;
     View v;
-    ImageButton ls, rs, lm, rm, cm1, cm2;
-    ImageButton lsCover, rsCover, lmCover, rmCover, cm1Cover, cm2Cover;
+    ImageButton ls, rs, lm, rm, cm1, cm2, lb, rb, cb1, cb2, gk;
+    ImageButton lsCover, rsCover, lmCover, rmCover, cm1Cover, cm2Cover,
+                rbCover, lbCover, cb1Cover, cb2Cover, gkCover;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,11 @@ public class MyTeamActivity extends AppCompatActivity {
         rm = (ImageButton)findViewById(R.id.rightMidButton);
         cm1 = (ImageButton)findViewById(R.id.centreMidOneButton);
         cm2 = (ImageButton)findViewById(R.id.centreMidTwoButton);
-
+        rb = (ImageButton)findViewById(R.id.rightBackButton);
+        lb = (ImageButton)findViewById(R.id.leftBackButton);
+        cb1 = (ImageButton)findViewById(R.id.centreBackOneButton);
+        cb2 = (ImageButton)findViewById(R.id.centreBackTwoButton);
+        gk = (ImageButton)findViewById(R.id.goalkeeper);
 
         lsCover = (ImageButton)findViewById(R.id.leftStrikerButtonCover);
         rsCover = (ImageButton)findViewById(R.id.rightStrikerButtonCover);
@@ -49,7 +55,11 @@ public class MyTeamActivity extends AppCompatActivity {
         rmCover = (ImageButton)findViewById(R.id.rightMidButtonCover);
         cm1Cover = (ImageButton)findViewById(R.id.centreMidOneButtonCover);
         cm2Cover = (ImageButton)findViewById(R.id.centreMidTwoButtonCover);
-
+        rbCover = (ImageButton)findViewById(R.id.rightBackButtonCover);
+        lbCover = (ImageButton)findViewById(R.id.leftBackButtonCover);
+        cb1Cover = (ImageButton)findViewById(R.id.centreBackOneButtonCover);
+        cb2Cover = (ImageButton)findViewById(R.id.centreBackTwoButtonCover);
+        gkCover = (ImageButton)findViewById(R.id.goalkeeperCover);
 
 
         ls.setVisibility(View.GONE);
@@ -58,6 +68,11 @@ public class MyTeamActivity extends AppCompatActivity {
         rm.setVisibility(View.GONE);
         cm1.setVisibility(View.GONE);
         cm2.setVisibility(View.GONE);
+        lb.setVisibility(View.GONE);
+        rb.setVisibility(View.GONE);
+        cb1.setVisibility(View.GONE);
+        cb2.setVisibility(View.GONE);
+        gk.setVisibility(View.GONE);
 
 
     }
@@ -143,6 +158,76 @@ public class MyTeamActivity extends AppCompatActivity {
 
 
     //
+    //get Left Back in app
+    //
+    public void getLeftBack(View view)  {
+
+        new LoadLeftBack().execute();
+
+        lbCover.setVisibility(View.GONE);
+        lb.setVisibility(View.VISIBLE);
+    }
+
+
+    //
+    //get right Back in app
+    //
+    public void getRightBack(View view)  {
+
+        new LoadRightBack().execute();
+
+        rbCover.setVisibility(View.GONE);
+        rb.setVisibility(View.VISIBLE);
+    }
+
+
+    //
+    //get Centre Back One in app
+    //
+    public void getCentreBackOne(View view)  {
+
+        new LoadCentreBackOne().execute();
+
+        cb1Cover.setVisibility(View.GONE);
+        cb1.setVisibility(View.VISIBLE);
+    }
+
+    //
+    //get Centre Back Two in app
+    //
+    public void getCentreBackTwo(View view)  {
+
+        new LoadCentreBackTwo().execute();
+
+        cb2Cover.setVisibility(View.GONE);
+        cb2.setVisibility(View.VISIBLE);
+    }
+
+
+    //
+    //get Goalkeeper in app
+    //
+    public void getGoalkeeper(View view)  {
+
+        new LoadGoalkeeper().execute();
+
+        gkCover.setVisibility(View.GONE);
+        gk.setVisibility(View.VISIBLE);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //
     //Run php script for Left Striker
     //
     class LoadLeftStriker extends AsyncTask<Void,Void,String>
@@ -154,7 +239,7 @@ public class MyTeamActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://192.168.8.100/getLeftStriker.php";
+            json_url = url+"/getLeftStriker.php";
         }
 
         @Override
@@ -219,7 +304,7 @@ public class MyTeamActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://192.168.8.100/getRightStriker.php";
+            json_url = url+"/getRightStriker.php";
         }
 
         @Override
@@ -291,7 +376,7 @@ public class MyTeamActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://192.168.8.100/getLeftMid.php";
+            json_url = url+"/getLeftMid.php";
         }
 
         @Override
@@ -358,7 +443,7 @@ public class MyTeamActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://192.168.8.100/getRightMid.php";
+            json_url = url+"/getRightMid.php";
         }
 
         @Override
@@ -424,7 +509,7 @@ public class MyTeamActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://192.168.8.100/getCentreMidOne.php";
+            json_url = url+"/getCentreMidOne.php";
         }
 
         @Override
@@ -489,7 +574,268 @@ public class MyTeamActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://192.168.8.100/getCentreMidTwo.php";
+            json_url = url+"/getCentreMidTwo.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids){
+
+            try{
+
+                URL url = new URL(json_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                while((JSON_STRING = bufferedReader.readLine())!=null)
+                {
+
+                    stringBuilder.append(JSON_STRING+"\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedJsonException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView textview = (TextView) findViewById(R.id.textview);
+            textview.setText("");
+            json_string = result;
+
+        }
+    }
+
+
+
+    //
+    //Run php script for Left Back
+    //
+    class LoadLeftBack extends AsyncTask<Void,Void,String>
+    {
+
+        String json_url;
+        String JSON_STRING;
+
+        @Override
+        protected void onPreExecute() {
+
+            json_url = url+"/getLeftBack.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids){
+
+            try{
+
+                URL url = new URL(json_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                while((JSON_STRING = bufferedReader.readLine())!=null)
+                {
+
+                    stringBuilder.append(JSON_STRING+"\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedJsonException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView textview = (TextView) findViewById(R.id.textview);
+            textview.setText("");
+            json_string = result;
+
+        }
+    }
+
+
+    //
+    //Run php script for Right Back
+    //
+    class LoadRightBack extends AsyncTask<Void,Void,String>
+    {
+
+        String json_url;
+        String JSON_STRING;
+
+        @Override
+        protected void onPreExecute() {
+
+            json_url = url+"/getRightBack.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids){
+
+            try{
+
+                URL url = new URL(json_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                while((JSON_STRING = bufferedReader.readLine())!=null)
+                {
+
+                    stringBuilder.append(JSON_STRING+"\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedJsonException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView textview = (TextView) findViewById(R.id.textview);
+            textview.setText("");
+            json_string = result;
+
+        }
+    }
+
+
+    //
+    //Run php script for Centre Back One
+    //
+    class LoadCentreBackOne extends AsyncTask<Void,Void,String>
+    {
+
+        String json_url;
+        String JSON_STRING;
+
+        @Override
+        protected void onPreExecute() {
+
+            json_url = url+"/getCentreBackOne.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids){
+
+            try{
+
+                URL url = new URL(json_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                while((JSON_STRING = bufferedReader.readLine())!=null)
+                {
+
+                    stringBuilder.append(JSON_STRING+"\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedJsonException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView textview = (TextView) findViewById(R.id.textview);
+            textview.setText("");
+            json_string = result;
+
+        }
+    }
+
+
+    //
+    //Run php script for Second Centre Back
+    //
+    class LoadCentreBackTwo extends AsyncTask<Void,Void,String>
+    {
+
+        String json_url;
+        String JSON_STRING;
+
+        @Override
+        protected void onPreExecute() {
+
+            json_url = url+"/getCentreBackTwo.php";
         }
 
         @Override
@@ -544,6 +890,71 @@ public class MyTeamActivity extends AppCompatActivity {
 
 
 
+
+
+    //
+    //Run php script for Goalkeeper
+    //
+    class LoadGoalkeeper extends AsyncTask<Void,Void,String>
+    {
+
+        String json_url;
+        String JSON_STRING;
+
+        @Override
+        protected void onPreExecute() {
+
+            json_url = url+"/getGoalkeeper.php";
+        }
+
+        @Override
+        protected String doInBackground(Void... voids){
+
+            try{
+
+                URL url = new URL(json_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+
+
+                while((JSON_STRING = bufferedReader.readLine())!=null)
+                {
+
+                    stringBuilder.append(JSON_STRING+"\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+
+            } catch (MalformedJsonException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView textview = (TextView) findViewById(R.id.textview);
+            textview.setText("");
+            json_string = result;
+
+        }
+    }
 
 
 

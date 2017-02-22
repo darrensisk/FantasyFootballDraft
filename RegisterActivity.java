@@ -25,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     AlertDialog.Builder builder;
-    String reg_url = "http://192.168.8.100/register.php";
+    String reg_url = "http://192.168.1.14/register.php";
     String name, email, username, password, confirmpassword;
     EditText regName, regEmail, regPassword, regUsername, regConfirmPassword;
 
